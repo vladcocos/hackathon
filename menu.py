@@ -17,7 +17,7 @@ def print_menu():
                     + x \
                     + ' - ' \
                     + str(utils.available_products_prices[x]) \
-                    + '$';
+                    + '$'
             if utils.available_products_stock[x] == 0:
                 current_product += ' (Out of stock)'
             print(current_product)
@@ -72,6 +72,7 @@ def print_menu():
         break
 
     payment_result = vending_machine.pay()
+
 
 if __name__ == '__main__':
     print_menu()

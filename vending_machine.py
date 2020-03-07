@@ -1,11 +1,14 @@
 import utils
 import time
 
+
 class VendingMachine:
+
     def __init__(self):
         self.available_bills = {bill: 5 for bill in [5, 10, 20, 50, 100]}
         self.ongoing_payment = False
         self.selected_product = ''
+        self.payment_method = None
 
     # def add_product(self, product_name, product_price):
         # self.available_products[product_name] = product_price
@@ -53,23 +56,23 @@ class VendingMachine:
             change = True
 
         print('Please wait...')
-        # time.sleep(1)
+        time.sleep(1)
 
         if change:
             self._give_change(current_sum - product_price)
 
-        print('Payment successful. Here is your product. Thank you for your purchase.')
+        print('Payment successful. Pick up your product from the vending machine tray. Thank you for your purchase.')
         utils.available_products_stock[product_name] -= 1
         return True
 
     def _give_change(self, change):
         print('Giving %d$ change' % change)
         print('Please wait...')
-        # time.sleep(1)
+        time.sleep(1)
 
         while change > 0:
             available_bills = [x for x in self.available_bills.keys() if self.available_bills[x] > 0]
-            available_bills = available_bills.sort(reverse=True)
+            available_bills.sort(reverse=True)
             print(available_bills)
             for bill in available_bills:
                 if bill > change:
