@@ -73,7 +73,6 @@ class VendingMachine:
         while change > 0:
             available_bills = [x for x in self.available_bills.keys() if self.available_bills[x] > 0]
             available_bills.sort(reverse=True)
-            print(available_bills)
             for bill in available_bills:
                 if bill > change:
                     continue

@@ -56,7 +56,7 @@ def print_menu():
             print('You canceled the transaction.')
             return False
 
-        if payment_method != '' and not int(payment_method) in range(1, len(utils.payment_methods)):
+        if payment_method != '' and not int(payment_method) in range(1, (len(utils.payment_methods) + 1)):
             print('You entered a wrong input. Please try again.')
             continue
 
