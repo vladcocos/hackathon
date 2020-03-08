@@ -24,12 +24,11 @@ def print_menu():
 
         product_option = input('Please select a product number from the ones above: ')
 
-        if product_option.lower() == 'c' or product_option.lower() == 'cancel':
-            print('You canceled the transaction.')
+        if utils.check_cancel(product_option):
             return False
 
         if not utils.is_input_number(product_option):
-            print('You entered a wrong input. Please try again.')
+            print('You entered an invalid input. Please try again.')
             continue
 
         product_option = int(product_option) - 1
@@ -52,18 +51,19 @@ def print_menu():
             print('\t(%d) %s' % (i + 1, utils.payment_methods[i]))
         payment_method = input('Please select a payment method number from the ones above: ')
 
-        if payment_method.lower() == 'c' or payment_method.lower() == 'cancel':
-            print('You canceled the transaction.')
+        if utils.check_cancel(payment_method):
             return False
 
+<<<<<<< HEAD
         if payment_method != '' and not int(payment_method) in range(1, (len(utils.payment_methods) + 1)):
+=======
+        if payment_method != '' and not int(payment_method) in range(1, len(utils.payment_methods) + 1):
+>>>>>>> origin/master
             print('You entered a wrong input. Please try again.')
             continue
 
         if payment_method == '':
             payment_method = '1'
-
-        # payment_methods = [x.split(' ')[0] for x in utils.payment_methods]
 
         payment_method = utils.payment_methods[int(payment_method) - 1].split(' ')[0]
         print('You chose to pay with ' + payment_method.lower())
