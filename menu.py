@@ -54,11 +54,7 @@ def print_menu():
         if utils.check_cancel(payment_method):
             return False
 
-<<<<<<< HEAD
-        if payment_method != '' and not int(payment_method) in range(1, (len(utils.payment_methods) + 1)):
-=======
         if payment_method != '' and not int(payment_method) in range(1, len(utils.payment_methods) + 1):
->>>>>>> origin/master
             print('You entered a wrong input. Please try again.')
             continue
 

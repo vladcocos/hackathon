@@ -5,7 +5,7 @@ available_products_list = ['Avira Prime', 'Antivirus PRO', 'Phantom VPN', 'Passw
 available_products_prices = {
 						'Avira Prime' : 75,
 						'Antivirus PRO' : 35,
-						'Phantom VPN' : 50, 
+						'Phantom VPN' : 50,
 						'Password Manager' : 20,
 						'Optimizer' : 10,
 						'System Speedup' : 25}
@@ -20,19 +20,18 @@ available_products_stock = {
 
 payment_methods = ['Cash (default)', 'Card']
 
-<<<<<<< HEAD
-=======
 SUCCESSFUL_PAYMENT = 'Payment successful. Pick up your product from the vending machine tray. Thank you for your purchase.'
 WAIT = 'Please wait...'
 
 cards = ['5273467758367213']
 
+
 def check_cancel(user_input):
-    if user_input.lower() == 'c' or user_input.lower() == 'cancel':
-        print('You canceled the transaction.')
-        return True
-    return False
->>>>>>> origin/master
+	if user_input.lower() == 'c' or user_input.lower() == 'cancel':
+		print('You canceled the transaction.')
+		return True
+	return False
+
 
 def check_stock(selected_product):
 	if available_products_stock[selected_product] > 0:
@@ -50,30 +49,32 @@ def is_input_number(input):
 
 
 def verify_card_number(card_number):
-    if not is_input_number(card_number) or len(card_number) != 16:
-        return False
+	if not is_input_number(card_number) or len(card_number) != 16:
+		return False
 
-    aux = [int(digit) for digit in card_number]
-    total_sum = 0
-    for i in range(0, len(aux)):
-        if i % 2 == 0:
-            aux[i] *= 2
-            if aux[i] / 10 != 0:
-                aux[i] = int(aux[i] / 10 + aux[i] % 10)
-        total_sum += aux[i]
-    return total_sum % 10 == 0
+	aux = [int(digit) for digit in card_number]
+	total_sum = 0
+	for i in range(0, len(aux)):
+		if i % 2 == 0:
+			aux[i] *= 2
+			if aux[i] / 10 != 0:
+				aux[i] = int(aux[i] / 10 + aux[i] % 10)
+		total_sum += aux[i]
+	return total_sum % 10 == 0
+
 
 def verify_card_expiration_date(card_expiration_date):
-    if len(card_expiration_date.split('/')) != 2:
-        return False
+	if len(card_expiration_date.split('/')) != 2:
+		return False
 
-    month = card_expiration_date.split('/')[0]
-    year = card_expiration_date.split('/')[1]
-    months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+	month = card_expiration_date.split('/')[0]
+	year = card_expiration_date.split('/')[1]
+	months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
 
-    if not month in months or not is_input_number(year) or not int(year) in [x for x in range(20, 30)]:
-        return False
-    return True
+	if not month in months or not is_input_number(year) or not int(year) in [x for x in range(20, 30)]:
+		return False
+	return True
+
 
 def generate_payment_token():
 	lowercase_letters = ''.join([chr(letter) for letter in range(ord('a'), ord('z') + 1)])
