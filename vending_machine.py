@@ -10,13 +10,6 @@ class VendingMachine:
         self.selected_product = ''
         self.payment_method = None
 
-    # def add_product(self, product_name, product_price):
-        # self.available_products[product_name] = product_price
-
-    # def add_products(self, products):
-        # for product in products:
-            # self.add_product(product[0], product[1])
-
     def choose_product(self, product):
         self.selected_product = product
 
@@ -40,8 +33,7 @@ class VendingMachine:
             print('You inserted %d$. You need to insert %d$ more.' % (current_sum, product_price - current_sum))
             user_input = input('Insert a bill: ')
 
-            if user_input.lower() == 'c' or user_input.lower() == 'cancel':
-                print('You canceled the transaction.')
+            if utils.check_cancel(user_input):
                 return False
 
             inserted_bill = int(user_input)
@@ -55,25 +47,24 @@ class VendingMachine:
         if current_sum > product_price:
             change = True
 
-        print('Please wait...')
+        print(utils.WAIT)
         time.sleep(1)
 
         if change:
             self._give_change(current_sum - product_price)
 
-        print('Payment successful. Pick up your product from the vending machine tray. Thank you for your purchase.')
+        print(utils.SUCCESSFUL_PAYMENT)
         utils.available_products_stock[product_name] -= 1
         return True
 
     def _give_change(self, change):
         print('Giving %d$ change' % change)
-        print('Please wait...')
+        print(utils.WAIT)
         time.sleep(1)
 
         while change > 0:
             available_bills = [x for x in self.available_bills.keys() if self.available_bills[x] > 0]
             available_bills.sort(reverse=True)
-            print(available_bills)
             for bill in available_bills:
                 if bill > change:
                     continue
@@ -85,19 +76,46 @@ class VendingMachine:
         product_name = self.selected_product
         product_price = utils.available_products_prices[product_name]
 
-        user_input = input('Enter your card. (Write \'card\') ')
+        print('Enter your card details.')
         while True:
-            if user_input.lower() == 'c' or user_input.lower() == 'cancel':
-                print('You canceled the transaction.')
+            user_input = input('Enter your card number: ')
+            if utils.check_cancel(user_input):
                 return False
 
-            if user_input.lower() == 'card':
-                self.payment_token = utils.generate_payment_token()
-                print('Validating your card. Please wait.')
-                time.sleep(1)
-                print('Your card was validated. Please wait.')
-                time.sleep(1)
-                print('Payment successful. Here is your product. Thank you for your purchase.')
-                return True
-            else:
-                print('You entered the wrong card. Please try again.')
+            if not utils.verify_card_number(user_input):
+                print('You entered an invalid card number. Try again.')
+                continue
+
+            card_number = user_input
+            break
+
+        while True:
+            user_input = input('Enter your card expiration date (format mm/yy): ')
+            if utils.check_cancel(user_input):
+                return False
+
+            if not utils.verify_card_expiration_date(user_input):
+                print('You entered an invalid expiration date. Try again.')
+                continue
+
+            break
+
+        while True:
+            user_input = input('Enter your card security code (CVC): ')
+            if utils.check_cancel(user_input):
+                return False
+
+            if not utils.is_input_number(user_input) or len(user_input) != 3:
+                print('You entered an invalid security code (CVC). Try again.')
+                continue
+
+            cvc = user_input
+            break
+
+        # self.payment_token = utils.generate_payment_token()
+        print('Validating your card. Please wait...')
+        time.sleep(1)
+        print('Your card was validated. Please wait...')
+        time.sleep(1)
+        print(utils.SUCCESSFUL_PAYMENT)
+        return True
