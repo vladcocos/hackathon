@@ -18,10 +18,12 @@ class VendingMachine:
             self.payment_method = payment_method
 
     def pay(self):
+        payment_result = None
         if self.payment_method == 'Cash':
-            self._pay_with_cash()
+            payment_result = self._pay_with_cash()
         elif self.payment_method == 'Card':
-            self._pay_with_card()
+            payment_result = self._pay_with_card()
+        return payment_result
 
     def _pay_with_cash(self):
         current_sum = 0

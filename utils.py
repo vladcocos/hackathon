@@ -1,4 +1,5 @@
 import random
+import os
 
 available_products_list = ['Avira Prime', 'Antivirus PRO', 'Phantom VPN', 'Password Manager', 'Optimizer', 'System Speedup']
 
@@ -24,6 +25,8 @@ SUCCESSFUL_PAYMENT = 'Payment successful. Pick up your product from the vending 
 WAIT = 'Please wait...'
 
 cards = ['5273467758367213']
+
+log_file_name = 'vending_machine.log'
 
 
 def check_cancel(user_input):
@@ -85,3 +88,16 @@ def generate_payment_token():
 	for _ in range(25):
 		result += random.choice(characters)
 	return generate_payment_token
+
+
+def log(timestamp, product_name, product_price, payment_type, transaction_status):
+	f = None
+	if os.path.isfile(log_file_name):
+		f = open(log_file_name, "a+")
+	else:
+		f = open(log_file_name, "w+")
+		f.write('Log format: Timestamp-Product Name-Product Price ($)-Payment Type-Transaction Status\n')
+
+	if f is not None:
+		f.write('{}-{}-{}$-{}-{}\n'.format(timestamp, product_name, product_price, payment_type, transaction_status))
+		f.close()
