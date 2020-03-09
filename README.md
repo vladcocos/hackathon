@@ -1,8 +1,8 @@
-# Avira Vening Machine
+## Avira Vending Machine
 
-## Requirements:
+### Requirements:
 python3
 
 
-## How to run:
+### How to run:
 python3 menu.py
