@@ -1,5 +1,6 @@
 import utils
 from vending_machine import *
+import datetime
 
 
 def print_menu():
@@ -68,6 +69,17 @@ def print_menu():
         break
 
     payment_result = vending_machine.pay()
+
+    time_stamp = datetime.datetime.now()
+    payment_status = ''
+    if payment_result:
+        payment_status = 'Transaction successful'
+    else:
+        payment_status = 'Transaction failed'
+
+    utils.log(str(time_stamp), str(utils.available_products_list[product_option]),
+              str(utils.available_products_prices[utils.available_products_list[product_option]]),
+              str(payment_method.lower()), payment_status)
 
 
 if __name__ == '__main__':
