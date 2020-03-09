@@ -5,4 +5,4 @@ python3
 
 
 ### How to run:
-`{ python3 menu.py }`
+`python3 menu.py`
